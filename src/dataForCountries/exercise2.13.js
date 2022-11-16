@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+// import Filter from "./component/Filter";
+// import Person from "./component/Person";
+// import PersonForm from "./component/PersonForm";
 import axios from "axios";
 import FilterCountry from "./component/FilterCountry";
 import Country from "./component/Country";
@@ -45,7 +48,7 @@ const App = () => {
       ) : (
         <>
           {OutputElement}
-          {selectedCountry && <OneCountry {...selectedCountry} />}
+          {selectedCountry === 4 && <OneCountry {...selectedCountry} />}
         </>
       )}
     </div>
