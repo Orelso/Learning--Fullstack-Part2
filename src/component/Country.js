@@ -1,3 +1,5 @@
+import { green } from "@mui/material/colors";
+
 const Country = ({onShow, ...props}) => {
   const {
     name: { common },
@@ -8,7 +10,7 @@ const Country = ({onShow, ...props}) => {
     <div>
       <p>
         {common}: {region}{" "}
-        <button onClick={() => onShow(props)}>show</button>
+        <button style={{backgroundColor: 'lightblue', color: 'white', borderRadius: 5}} onClick={() => onShow(props)}>show</button>
       </p>
     </div>
   );

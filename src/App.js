@@ -4,6 +4,19 @@ import FilterCountry from "./component/FilterCountry";
 import Country from "./component/Country";
 import OneCountry from "./component/OneCountry";
 import Weather from "./component/Weather";
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+const themeDark = createTheme({
+  palette: {
+    background: {
+      default: "#222222"
+    },
+    text: {
+      primary: "black"
+    }
+  }
+});
+
 
 const App = () => {
   const [weather, setWeather] = useState(undefined);
@@ -38,11 +51,11 @@ const App = () => {
   }, [selectedCountry]);
 
   console.log("weather", weather);
-  // const api_key = process.env.REACT_APP_API_KEY
 
   return (
-    <div>
-      <h1 style={{ marginLeft: "50%" }}>Countries Filter 🌍</h1>
+    <ThemeProvider theme={themeDark}>
+    <div style={{textAlign: "center", backgroundColor: "lightsteelblue"}}>
+      <h1>Country Filter 🌍</h1>
       <FilterCountry
         onSearch={(key) => {
           setSearchKey(key);
@@ -73,6 +86,7 @@ const App = () => {
         </>
       )}
     </div>
+    </ThemeProvider>
   );
 };
 
