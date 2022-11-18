@@ -17,6 +17,8 @@ const OneCountry = ({
   coatOfArms,
   maps,
 }) => {
+
+
   return (
     <div>
       <Grid
@@ -65,7 +67,7 @@ const OneCountry = ({
             <Typography>
               <h4>Coat of Arms</h4>
               <h1>
-                <img src={coatOfArms?.png} alt='img' width={100} />
+                <img src={coatOfArms?.png} alt='*Seems like no img' width={100} />
               </h1>
             </Typography>
           </CardContent>

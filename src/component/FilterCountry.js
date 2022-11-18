@@ -11,7 +11,7 @@ const FilterCountry = ({ onSearch, name }) => {
   return (
     <div>
       <div>
-        Find Countries <input value={show} onChange={handleListSearch} />
+        Find Countries <input value={show} onChange={handleListSearch} placeholder="Type Country Name" style={{}}/>
       </div>
     </div>
   );
