@@ -1,96 +1,87 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import FilterCountry from "./component/FilterCountry";
-import Country from "./component/Country";
-import OneCountry from "./component/OneCountry";
-import Weather from "./component/Weather";
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-
-const themeDark = createTheme({
-  palette: {
-    background: {
-      default: "#222222"
-    },
-    text: {
-      primary: "black"
-    }
-  }
-});
+import Filter from "./component/Filter";
+import Person from "./component/Person";
+import PersonForm from "./component/PersonForm";
+import axios from 'axios'
 
 
 const App = () => {
-  const [weather, setWeather] = useState(undefined);
-  const [selectedCountry, setSelectedCountry] = useState(undefined);
-  const [countries, setCountries] = useState([]);
-  const [searchKey, setSearchKey] = useState("");
+  const [persons, setPersons] = useState([]);
+  const [notesToShow, setNotesToShow] = useState(persons)
+  // const [newPerson, setNewPerson] = useState()
+  const [showAll, setShowAll] = useState(true)
 
-  const filteredCountries = searchKey
-    ? countries.filter(({ name: { common } }) =>
-        common.toUpperCase().includes(searchKey)
-      )
-    : countries;
+  const toggleImportanceOf = id => {
+    const url = `http://localhost:8001/persons/${id}`
+    const person = persons.find(n => n.id === id)
+    const changedPerson = { ...person, important: !person.important }
+  
+    axios.put(url, changedPerson).then(response => {
+      setPersons(persons.map(n => n.id !== id ? n : response.data))
+    })
+  }
+    
+    // console.log(`importance of ${id} needs to be toggled`)
+  
 
   useEffect(() => {
-    console.log("It started");
-    axios.get("https://restcountries.com/v3.1/all").then((response) => {
-      console.log("promise fulfilled", response.data);
-      setCountries(response.data);
-    });
-  }, []);
+    console.log('effect')
+    axios
+      .get('http://localhost:8001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+        setPersons(persons.concat(response.data))
+      })
+  }, [])
 
+  const handleDelete = async (id) => {
+    console.log("tete", persons)
+    await fetch('http://localhost:8001/persons/' + id, {
+        method: 'DELETE'
+    })
+    const newPerson = persons.filter(person => person.id !== id)
+    setPersons(newPerson)
+  }
+  
+
+  // const handlePersonChange = (event) => {
+  //   setNewPerson(event.target.value)
+  // }
+ 
   useEffect(() => {
-    if (selectedCountry) {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${selectedCountry.latlng[0]}&lon=${selectedCountry.latlng[1]}&appid=${process.env.REACT_APP_API_KEY}`
-        )
-        .then((response) => {
-          setWeather(response.data);
-        });
-    }
-  }, [selectedCountry]);
+    setNotesToShow(persons)
+  },[persons] );
 
-  console.log("weather", weather);
+
 
   return (
-    <ThemeProvider theme={themeDark}>
-    <div style={{textAlign: "center", backgroundColor: "lightsteelblue"}}>
-      <h1 style={{fontSize: 50}}>Country Filter 🌍</h1>
-      <FilterCountry
-        onSearch={(key) => {
-          setSearchKey(key);
-          const filteredCountries = key
-            ? countries.filter(({ name: { common } }) =>
-                common.toUpperCase().includes(key)
-              )
-            : countries;
-          if (filteredCountries.length === 1) {
-            setSelectedCountry(filteredCountries[0]);
-          }
-        }}
-      />
-      {filteredCountries.length > 10 ? (
-        <h1 style={{ textTransform: 'uppercase', color: 'red' }}>Too many matches, specify another filter</h1>
-      ) : (
-        <>
-          {filteredCountries.length !== 1 &&
-            filteredCountries.map((country, idx) => (
-              <Country
-                key={idx}
-                {...country}
-                onShow={(country) => setSelectedCountry(country)}
-              />
-            ))}
-          {selectedCountry && <OneCountry {...selectedCountry} />}
-          {weather && <Weather {...weather} />}
-        </>
-      )}
+    <div>
+      <h2>Phonebook</h2>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? 'important' : 'all' }
+        </button>
+      </div> 
+      
+      <Filter onAdd={setNotesToShow} persons={persons} />
+      <h2>Add a new Person</h2>
+      <PersonForm onAdd={(personObject) => setPersons(persons.concat(personObject))} persons={persons} />
+      <h2>Numbers</h2>
+      <ul>
+        {notesToShow.map(person =>
+          <Person key={person.id} person={person} onDelete={() => handleDelete(person.id)} toggleImportance={() => toggleImportanceOf(person.id)}/>
+        )}
+      </ul>
+      {/* <form onSubmit={addPerson}>
+      <input
+          value={newPerson}
+          onChange={handlePersonChange}
+        />
+        <button type="submit">save</button>
+      </form> */}
     </div>
-    </ThemeProvider>
   );
 };
 
 export default App;
-
-
-// weather.weather[0].description && weather.wind.de

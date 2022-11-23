@@ -22,7 +22,7 @@ const Filter = ({ onAdd, persons }) => {
   return (
     <div>
       <div>
-        Filter shown with <input value={show} onChange={handleListSearch} />
+        Search <input placeholder="..."  value={show} onChange={handleListSearch} />
       </div>
     </div>
   );

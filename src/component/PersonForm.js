@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios'
 
 
 const PersonForm = ({ onAdd, persons  }) => {
@@ -7,31 +8,34 @@ const PersonForm = ({ onAdd, persons  }) => {
 
     const addNewPerson = (event) => {
         event.preventDefault();
-        if (persons.some((checkPerson) => checkPerson?.name === newName || checkPerson?.number === newNumber)) {
-          return alert(`${newName || newNumber} is already added to phonebook`)
-        }
-    
-        // if (persons.some(({name, number}) => name === newName || number === newNumber)) {
-        //   alert(`${newName || newNumber} is already added to phonebook`)
-        // }
-    
         const personObject = {
           name: newName,
           number: newNumber,
           date: new Date().toISOString(),
-          id: persons.length + 1,
         };
+        
+        if (persons.some((checkPerson) => checkPerson?.name === newName || checkPerson?.number === newNumber)) {
+          alert(`${newName || newNumber} is already added to phonebook`)
+        } else {
+        axios
+        .post('http://localhost:8001/persons', personObject)
+        .then(response => {
+          console.log(response)
+          onAdd(response.data);
 
+        })
         setNewName("");
-        setNewNumber("")
-        onAdd(personObject);
+        setNewNumber("")        
+      }
+
+       
       };
     return (
       <div>
       <form onSubmit={addNewPerson}>
-        name: <input value={newName} onChange={(e => setNewName(e.target.value))} />
+        name: <input placeholder="John Doe" value={newName} onChange={(e => setNewName(e.target.value))} required />
         <br></br>
-        number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)} />
+        number: <input type="tel" placeholder="305-206-2795" value={newNumber} onChange={(e) => setNewNumber(e.target.value)} required />
         <div>
           <button type='submit'>add</button>
         </div>
