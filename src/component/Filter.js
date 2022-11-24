@@ -6,7 +6,7 @@ const Filter = ({ onAdd, persons }) => {
   const handleListSearch = ({ target: { value } }) => {
     console.log(value);
     const upperValue = value.toUpperCase();
-    const notesToShow =
+    const personsToShow =
       value.length > 0
         ? persons.filter(
             ({ name, number }) =>
@@ -15,15 +15,28 @@ const Filter = ({ onAdd, persons }) => {
               number.replace(/-/g, "").includes(value)
           )
         : persons;
-    onAdd(notesToShow);
+    onAdd(personsToShow);
     setShow(value);
   };
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   return (
     <div>
-      <div>
+      <div style={{fontSize: 30, marginTop: -80}}>
         Search{" "}
-        <input placeholder='...' value={show} onChange={handleListSearch} />
+        <input
+          style={{
+            borderRadius: 10,
+            width: 500,
+            height: 40,
+            textAlign: "center",
+            boxSizing: "border-box",
+            outline: "none",
+            fontSize: 20,
+          }}
+          placeholder='........'
+          value={show}
+          onChange={handleListSearch}
+        />
       </div>
     </div>
   );

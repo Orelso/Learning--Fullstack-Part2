@@ -4,10 +4,14 @@ import Person from "./component/Person";
 import PersonForm from "./component/PersonForm";
 import axios from "axios";
 import personService from "./services/persons";
+import Divider from '@mui/material/Divider';
+import { Button } from "@mui/material";
+import { blue } from "@mui/material/colors";
+
 
 const App = () => {
   const [persons, setPersons] = useState([]);
-  const [notesToShow, setNotesToShow] = useState(persons);
+  const [personsToShow, setPersonsToShow] = useState(persons);
   // const [newPerson, setNewPerson] = useState()
   const [showAll, setShowAll] = useState(true);
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -44,40 +48,44 @@ const App = () => {
   }, []);
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   const handleDelete = async (id) => {
-    console.log("tete", persons);
+    console.log("checkDELETE", persons);
     await fetch("http://localhost:8001/persons/" + id, {
       method: "DELETE",
     });
+    // if(window.confirm("yo")) {
+    //   window.open("open")
+    //   window.close("close")
+    // }
     const newPerson = persons.filter((person) => person.id !== id);
     setPersons(newPerson);
   };
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   useEffect(() => {
-    setNotesToShow(persons);
+    setPersonsToShow(persons);
   }, [persons]);
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-  // let personsToShow = showAll
-  // ? persons
-  // : persons.filter(person => person.important)
+  const personToShow = showAll
+  ? personsToShow
+  : personsToShow.filter(person => person.important)
 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? "important" : "all"}
-        </button>
-      </div>
-
-      <Filter onAdd={setNotesToShow} persons={persons} />
-      <h2>Add a new Person</h2>
+    <div style={{textAlign: "center"}}>
+      <h1 style={{fontSize: 100}}>☏ Phonebook ☎</h1>
+      <Filter onAdd={setPersonsToShow} persons={persons} />
+      {/* <h2 style={{marginTop: 40}}><i style={{color: "blue"}}>Add Contact</i></h2> */}
       <PersonForm
         onAdd={(personObject) => setPersons(persons.concat(personObject))}
         persons={persons}
+        setPersons={setPersons}
       />
-      <h2>Numbers</h2>
+      
+        <Button sx={{marginTop: 4}} variant="outlined" onClick={() => setShowAll(!showAll)}>
+          show {showAll ? "important Contacts" : "all contacts"}
+        </Button>
+      
+      <Divider />
       <ul>
-        {notesToShow.map((person) => (
+        {personToShow.map((person) => (
           <Person
             key={person.id}
             person={person}

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-// import personService from './services/persons'
+import personService from "../services/persons";
+import { Button } from "@mui/material";
 
-const PersonForm = ({ onAdd, persons, setPersons, personService }) => {
+const PersonForm = ({ onAdd, persons, setPersons }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -40,33 +41,53 @@ const PersonForm = ({ onAdd, persons, setPersons, personService }) => {
     }
   };
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-  const handlePersonChange = (event) => {
-    setNewName(event.target.value);
-    setNewNumber(event.target.value);
-  };
-  /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   return (
-    <div>
+    <div style={{ fontSize: 30, marginTop: 40 }}>
       <form onSubmit={addNewPerson}>
-        name:{" "}
+        Name:{" "}
         <input
+          style={{
+            borderRadius: 10,
+            width: 200,
+            height: 40,
+            textAlign: "center",
+            boxSizing: "border-box",
+            fontSize: 15,
+            borderColor: "blue"
+          }}
           placeholder='John Doe'
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           required
         />
-        <br></br>
-        number:{" "}
+        &nbsp; Phone:{" "}
         <input
+          style={{
+            borderRadius: 10,
+            width: 200,
+            height: 40,
+            textAlign: "center",
+            boxSizing: "border-box",
+            outline: "none",
+            fontSize: 15,
+            borderColor: "blue"
+
+          }}
           type='tel'
           placeholder='305-206-2795'
           value={newNumber}
           onChange={(e) => setNewNumber(e.target.value)} //onChange={handlePersonChange}
           required
         />
-        <div>
-          <button type='submit'>add</button>
-        </div>
+        &nbsp;
+        <Button
+          sx={{ marginTop: 1 }}
+          variant='outlined'
+          color='error'
+          type='submit'
+        >
+          add
+        </Button>
       </form>
     </div>
   );
