@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const Filter = ({ onAdd, persons }) => {
   const [show, setShow] = useState("");
-
+  /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   const handleListSearch = ({ target: { value } }) => {
     console.log(value);
     const upperValue = value.toUpperCase();
@@ -18,11 +18,12 @@ const Filter = ({ onAdd, persons }) => {
     onAdd(notesToShow);
     setShow(value);
   };
-
+  /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   return (
     <div>
       <div>
-        Search <input placeholder="..."  value={show} onChange={handleListSearch} />
+        Search{" "}
+        <input placeholder='...' value={show} onChange={handleListSearch} />
       </div>
     </div>
   );

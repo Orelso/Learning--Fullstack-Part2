@@ -5,7 +5,7 @@ import axios from "axios";
 const PersonForm = ({ onAdd, persons, setPersons, personService }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-
+  /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   const addNewPerson = (event) => {
     event.preventDefault();
     const personObject = {
@@ -39,10 +39,12 @@ const PersonForm = ({ onAdd, persons, setPersons, personService }) => {
       setNewNumber("");
     }
   };
+  /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   const handlePersonChange = (event) => {
-    setNewName(event.target.value)
-    setNewNumber(event.target.value)
-  }
+    setNewName(event.target.value);
+    setNewNumber(event.target.value);
+  };
+  /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   return (
     <div>
       <form onSubmit={addNewPerson}>
@@ -59,14 +61,13 @@ const PersonForm = ({ onAdd, persons, setPersons, personService }) => {
           type='tel'
           placeholder='305-206-2795'
           value={newNumber}
-          onChange={(e) => setNewNumber(e.target.value) } //onChange={handlePersonChange}
+          onChange={(e) => setNewNumber(e.target.value)} //onChange={handlePersonChange}
           required
         />
         <div>
           <button type='submit'>add</button>
         </div>
-      </form>        
-       
+      </form>
     </div>
   );
 };
