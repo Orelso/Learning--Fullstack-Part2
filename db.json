@@ -4,7 +4,7 @@
       "name": "Arto Hellas",
       "number": "040-123456",
       "id": 1,
-      "important": false
+      "important": true
     },
     {
       "name": "Ada Lovelace",
@@ -22,14 +22,7 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4,
-      "important": false
-    },
-    {
-      "name": "Orelso Vitam",
-      "number": "305-505-6237",
-      "date": "2022-11-23T11:05:41.108Z",
-      "id": 5,
-      "important": false
+      "important": true
     }
   ]
 }
