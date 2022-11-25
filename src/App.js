@@ -6,7 +6,6 @@ import axios from "axios";
 import personService from "./services/persons";
 import Divider from '@mui/material/Divider';
 import { Button } from "@mui/material";
-import { blue } from "@mui/material/colors";
 
 
 const App = () => {
@@ -49,16 +48,14 @@ const App = () => {
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   const handleDelete = async (id) => {
     console.log("checkDELETE", persons);
-    await fetch("http://localhost:8001/persons/" + id, {
-      method: "DELETE",
-    });
-    if(window.confirm("Are you sure you want to delete")) {
-      return handleDelete
-    } else {
-      window.close("Ok I wont delete")
-    }
-    const newPerson = persons.filter((person) => person.id !== id);
-    setPersons(newPerson);
+    const removePerson = persons.find((person) => person.id === id); //* Adds name to the window.confirm on line 53
+    if(window.confirm(`Are you sure you want to delete ${removePerson.name.charAt(0).toUpperCase()+ removePerson.name.slice(1)}`)) { 
+      await fetch("http://localhost:8001/persons/" + id, { //* Backend 54-56
+        method: "DELETE",
+      });
+      const newPerson = persons.filter((person) => person.id !== id); //* UI 
+       setPersons(newPerson); 
+    } 
   };
   /* ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
   useEffect(() => {
@@ -76,8 +73,9 @@ const App = () => {
       {/* <h2 style={{marginTop: 40}}><i style={{color: "blue"}}>Add Contact</i></h2> */}
       <PersonForm
         onAdd={(personObject) => setPersons(persons.concat(personObject))}
+        onReplace={(newPersons) => setPersons(newPersons)}
         persons={persons}
-        setPersons={setPersons}
+        // setPersons={setPersons}
       />
       
         <Button sx={{marginTop: 4}} variant="outlined" onClick={() => setShowAll(!showAll)}>
