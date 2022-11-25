@@ -26,7 +26,7 @@ const Filter = ({ onAdd, persons }) => {
         <input
           style={{
             borderRadius: 10,
-            width: 500,
+            width: 500, 
             height: 40,
             textAlign: "center",
             boxSizing: "border-box",

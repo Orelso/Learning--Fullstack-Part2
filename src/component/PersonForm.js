@@ -16,11 +16,11 @@ const PersonForm = ({ onAdd, persons, setPersons }) => {
       important: Math.random() > 0.5,
     };
 
-    personService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-    });
+    // personService.create(personObject).then((returnedPerson) => {
+    //   setPersons(persons.concat(returnedPerson));
+    //   setNewName("");
+    //   setNewNumber("");
+    // });
 
     if (
       persons?.some(
@@ -76,7 +76,7 @@ const PersonForm = ({ onAdd, persons, setPersons }) => {
           type='tel'
           placeholder='305-206-2795'
           value={newNumber}
-          onChange={(e) => setNewNumber(e.target.value)} //onChange={handlePersonChange}
+          onChange={(e) => setNewNumber(e.target.value)}
           required
         />
         &nbsp;

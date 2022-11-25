@@ -52,10 +52,11 @@ const App = () => {
     await fetch("http://localhost:8001/persons/" + id, {
       method: "DELETE",
     });
-    // if(window.confirm("yo")) {
-    //   window.open("open")
-    //   window.close("close")
-    // }
+    if(window.confirm("Are you sure you want to delete")) {
+      return handleDelete
+    } else {
+      window.close("Ok I wont delete")
+    }
     const newPerson = persons.filter((person) => person.id !== id);
     setPersons(newPerson);
   };
