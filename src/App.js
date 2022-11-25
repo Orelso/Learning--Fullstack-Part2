@@ -92,7 +92,7 @@ const App = () => {
             toggleImportance={() => toggleImportanceOf(person.id)}
           />
         ))}
-      </ul>
+      </ul> 
     </div>
   );
 };
