@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import { pink } from '@mui/material/colors';
 
 
 const Person = ({ person, onDelete, toggleImportance }) => {
