@@ -24,18 +24,16 @@ console.log(persons)
     } else if (nameExists)
     {
       if(window.confirm("Replace number?")){
-        axios
+         return axios
         .put(`http://localhost:8001/persons/${nameExists.id}` , personObject)
         .then((response) => {
           console.log(response);
           const indexUpdatedNumber = persons.findIndex((person) => person.id === nameExists.id); //* UI 
           console.log(indexUpdatedNumber)
-          let existingPersons = [...persons] 
-          console.log(existingPersons);
-          const newPersons = existingPersons.splice(indexUpdatedNumber, 1, response.data) 
-          console.log(newPersons)
-          // onReplace(newPersons);    
-   
+          let existingPersons = [...persons]
+          existingPersons.splice(indexUpdatedNumber, 1, response.data)
+          console.log(existingPersons)
+          onReplace(existingPersons);    
          });
       
       }
